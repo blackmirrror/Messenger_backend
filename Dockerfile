@@ -1,5 +1,5 @@
 FROM eclipse-temurin:17-jdk-alpine
-VOLUME /tmp
+#VOLUME /tmp
 COPY target/*.jar app.jar
 ENTRYPOINT ["java","-jar","/app.jar"]
 ENV DATABASE_URL jdbc:postgresql://dpg-ckdd74msmu8c7389dmsg-a.oregon-postgres.render.com:5432/messenger_t316
