@@ -1,11 +1,14 @@
 package com.example.messenger.controller;
 
 import com.example.messenger.models.Chat;
+import com.example.messenger.models.User;
 import com.example.messenger.services.ChatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/chats")
@@ -13,6 +16,16 @@ public class ChatController {
 
     @Autowired
     private ChatService chatService;
+
+    @GetMapping
+    public ResponseEntity<List<Chat>> getAllChats() {
+        List<Chat> users = chatService.getAllChats();
+        if (!users.isEmpty()) {
+            return ResponseEntity.ok(users);
+        } else {
+            return ResponseEntity.noContent().build();
+        }
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<Chat> getChatById(@PathVariable Long id) {

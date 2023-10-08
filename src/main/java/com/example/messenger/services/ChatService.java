@@ -5,11 +5,17 @@ import com.example.messenger.repositories.ChatRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ChatService {
 
     @Autowired
     private ChatRepository chatRepository;
+
+    public List<Chat> getAllChats() {
+        return chatRepository.findAll();
+    }
 
     public Chat getChatById(Long id) {
         return chatRepository.findById(id).orElse(null);

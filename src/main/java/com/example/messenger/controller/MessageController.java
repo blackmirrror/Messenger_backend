@@ -19,10 +19,6 @@ public class MessageController {
 
     @Autowired
     private MessageService messageService;
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private ChatService chatService;
 
     @GetMapping("/{id}")
     public ResponseEntity<Message> getMessageById(@PathVariable Long id) {
@@ -34,6 +30,16 @@ public class MessageController {
         }
     }
 
+    @GetMapping
+    public ResponseEntity<List<Message>> getAllMessages() {
+        List<Message> users = messageService.getAllMessages();
+        if (!users.isEmpty()) {
+            return ResponseEntity.ok(users);
+        } else {
+            return ResponseEntity.noContent().build();
+        }
+    }
+
     @GetMapping("/chat/{chatId}")
     public ResponseEntity<List<Message>> getMessagesByChatId(@PathVariable Long chatId) {
         List<Message> messages = messageService.getMessagesByChatId(chatId);
@@ -42,10 +48,6 @@ public class MessageController {
 
     @PostMapping
     public ResponseEntity<Message> createMessage(@RequestBody Message message) {
-        User sender = userService.getUserById(message.getSender().getId());
-        Chat chat = chatService.getChatById(message.getChat().getId());
-        message.setSender(sender);
-        message.setChat(chat);
         Message createdMessage = messageService.createMessage(message);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdMessage);
     }

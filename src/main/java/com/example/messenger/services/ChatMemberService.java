@@ -1,9 +1,13 @@
 package com.example.messenger.services;
 
+import com.example.messenger.models.Chat;
 import com.example.messenger.models.ChatMember;
 import com.example.messenger.repositories.ChatMemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ChatMemberService {
@@ -13,6 +17,16 @@ public class ChatMemberService {
 
     public ChatMember getChatMemberById(Long id) {
         return chatMemberRepository.findById(id).orElse(null);
+    }
+
+    public List<ChatMember> getAllChatMembers() { return chatMemberRepository.findAll();}
+
+    public List<Chat> getChatsForUser(Long userId) {
+        List<ChatMember> chatMembers = chatMemberRepository.findByUserId(userId);
+        List<Chat> chats = chatMembers.stream()
+                .map(ChatMember::getChat)
+                .collect(Collectors.toList());
+        return chats;
     }
 
     public ChatMember createChatMember(ChatMember chatMember) {

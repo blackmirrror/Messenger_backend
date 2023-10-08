@@ -21,6 +21,10 @@ public class UserService {
         return userRepository.findById(id).orElse(null);
     }
 
+    public User getUserByPhone(String phone) {return userRepository.findByPhone(phone);}
+
+    public User getUserByLink(String link) {return userRepository.findByLink(link);}
+
     public User createUser(User user) {
         return userRepository.save(user);
     }

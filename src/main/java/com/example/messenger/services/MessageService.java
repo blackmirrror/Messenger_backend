@@ -17,6 +17,8 @@ public class MessageService {
         return messageRepository.findById(id).orElse(null);
     }
 
+    public List<Message> getAllMessages() { return messageRepository.findAll();}
+
     public List<Message> getMessagesByChatId(Long chatId) {
         return messageRepository.findByChatId(chatId);
     }

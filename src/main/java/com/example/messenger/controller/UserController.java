@@ -36,7 +36,27 @@ public class UserController {
         }
     }
 
-    @PostMapping("/reg")
+    @GetMapping("/by-phone/{phone}")
+    public ResponseEntity<User> getUserByPhone(@PathVariable String phone) {
+        User user = userService.getUserByPhone(phone);
+        if (user != null) {
+            return ResponseEntity.ok(user);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("/by-link/{link}")
+    public ResponseEntity<User> getUserByLink(@PathVariable String link) {
+        User user = userService.getUserByLink(link);
+        if (user != null) {
+            return ResponseEntity.ok(user);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PostMapping()
     public ResponseEntity<User> createUser(@RequestBody User user) {
         System.out.println(user.getPhone());
         User createdUser = userService.createUser(user);

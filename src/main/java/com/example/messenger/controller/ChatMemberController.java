@@ -11,16 +11,24 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/chatMembers")
 public class ChatMemberController {
 
     @Autowired
     private ChatMemberService chatMemberService;
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private ChatService chatService;
+
+    @GetMapping
+    public ResponseEntity<List<ChatMember>> getAllChatMembers() {
+        List<ChatMember> users = chatMemberService.getAllChatMembers();
+        if (!users.isEmpty()) {
+            return ResponseEntity.ok(users);
+        } else {
+            return ResponseEntity.noContent().build();
+        }
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<ChatMember> getChatMemberById(@PathVariable Long id) {
@@ -32,12 +40,14 @@ public class ChatMemberController {
         }
     }
 
+    @GetMapping("/chats/{id}")
+    public ResponseEntity<List<Chat>> getChatsForUser(@PathVariable Long id) {
+        List<Chat> chats = chatMemberService.getChatsForUser(id);
+        return ResponseEntity.ok(chats);
+    }
+
     @PostMapping
     public ResponseEntity<ChatMember> createChatMember(@RequestBody ChatMember chatMember) {
-        User user = userService.getUserById(chatMember.getUser().getId());
-        Chat chat = chatService.getChatById(chatMember.getChat().getId());
-        chatMember.setUser(user);
-        chatMember.setChat(chat);
         ChatMember createdChatMember = chatMemberService.createChatMember(chatMember);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdChatMember);
     }

@@ -6,24 +6,27 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "users")
+@Table(name = "users", indexes = {
+        @Index(name = "idx_phone", columnList = "phone", unique = true),
+        @Index(name = "idx_link", columnList = "link", unique = true)
+})
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @JsonProperty("phone")
-    @Column(unique = true, name = "phone")
+    @Column(unique = true, name = "phone", nullable = false)
     private String phone;
-    @Column(name = "password")
+    @Column(name = "password", nullable = false)
     private String password;
-    @Column(name = "username")
+    @Column(name = "username", nullable = false)
     private String username;
-    @Column(unique = true, name = "link")
+    @Column(unique = true, name = "link", nullable = false)
     private String link;
     @Column(name = "photo_url")
     private String photoUrl;
-    @Column(name = "is_online")
+    @Column(name = "is_online", nullable = false)
     private boolean isOnline;
 
     public Long getId() {
