@@ -29,6 +29,14 @@ public class ChatMemberService {
         return chats;
     }
 
+    public List<ChatMember> getChatMembersByUserId(Long userId) {
+        return chatMemberRepository.findByUserId(userId);
+    }
+
+    public List<ChatMember> getChatMembersByChatId(Long chatId) {
+        return chatMemberRepository.findByChatId(chatId);
+    }
+
     public ChatMember createChatMember(ChatMember chatMember) {
         return chatMemberRepository.save(chatMember);
     }

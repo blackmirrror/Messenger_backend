@@ -46,6 +46,18 @@ public class ChatMemberController {
         return ResponseEntity.ok(chats);
     }
 
+    @GetMapping("/by-user/{id}")
+    public ResponseEntity<List<ChatMember>> getChatMembersByUserId(@PathVariable Long id) {
+        List<ChatMember> chatMembers = chatMemberService.getChatMembersByUserId(id);
+        return ResponseEntity.ok(chatMembers);
+    }
+
+    @GetMapping("/by-chat/{id}")
+    public ResponseEntity<List<ChatMember>> getChatMembersByChatId(@PathVariable Long id) {
+        List<ChatMember> chatMembers = chatMemberService.getChatMembersByChatId(id);
+        return ResponseEntity.ok(chatMembers);
+    }
+
     @PostMapping
     public ResponseEntity<ChatMember> createChatMember(@RequestBody ChatMember chatMember) {
         ChatMember createdChatMember = chatMemberService.createChatMember(chatMember);
