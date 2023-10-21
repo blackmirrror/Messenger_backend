@@ -46,6 +46,11 @@ public class ChatMemberController {
         return ResponseEntity.ok(chats);
     }
 
+    @GetMapping("/findCommonChatIds")
+    public Long findCommonChatIds(@RequestParam Long userId1, @RequestParam Long userId2) {
+        return chatMemberService.findCommonChatId(userId1, userId2);
+    }
+
     @GetMapping("/by-user/{id}")
     public ResponseEntity<List<ChatMember>> getChatMembersByUserId(@PathVariable Long id) {
         List<ChatMember> chatMembers = chatMemberService.getChatMembersByUserId(id);

@@ -29,6 +29,10 @@ public class ChatMemberService {
         return chats;
     }
 
+    public Long findCommonChatId(Long userId1, Long userId2) {
+        return chatMemberRepository.findCommonChatId(userId1, userId2);
+    }
+
     public List<ChatMember> getChatMembersByUserId(Long userId) {
         return chatMemberRepository.findByUserId(userId);
     }
